@@ -30,16 +30,7 @@ fetchData();
 	<div
 		class="h-screen w-screen bg-[#08090a] p-8 text-white relative overflow-hidden"
 	>
-		<div
-			class="inset-0 blur-3xl z-30 hidden lg:block absolute pointer-events-none"
-			:style="{
-				background: `radial-gradient(
-          400px at ${x}px ${y}px,
-          rgba(0, 255, 0, 0.3),
-          transparent 60%
-        )`,
-			}"
-		/>
+		<TheSpotlight :x="x" :y="y" />
 		<h1 class="text-x font-bold">Hi Infinite Scroll 👋</h1>
 		<div class="mt-12">
 			<ul>
