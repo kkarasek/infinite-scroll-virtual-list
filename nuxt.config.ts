@@ -11,4 +11,9 @@ export default defineNuxtConfig({
 			autoprefixer: {},
 		},
 	},
+	app: {
+		head: {
+			title: 'Infinite Scroll',
+		},
+	},
 });
