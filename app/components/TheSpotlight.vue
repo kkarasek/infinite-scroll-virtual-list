@@ -1,8 +1,7 @@
 <script setup lang="ts">
-defineProps<{
-	x: number;
-	y: number;
-}>();
+import { useMouse } from '@vueuse/core';
+
+const { x, y } = useMouse();
 </script>
 
 <template>

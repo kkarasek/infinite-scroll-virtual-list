@@ -12,7 +12,7 @@
  -->
 
 <script setup lang="ts">
-import { useMouse, useInfiniteScroll, useVirtualList } from '@vueuse/core';
+import { useInfiniteScroll, useVirtualList } from '@vueuse/core';
 interface Colour {
 	id: number;
 	name: string;
@@ -26,8 +26,6 @@ interface ApiResponse {
 const limit = 20;
 const offset = ref(0);
 const colours = ref<Colour[]>([]);
-
-const { x, y } = useMouse();
 
 const infiniteScrollRef = ref<HTMLElement | null>(null);
 
@@ -65,7 +63,7 @@ fetchData();
 	<div
 		class="h-screen w-screen bg-[#08090a] p-8 text-white relative overflow-hidden"
 	>
-		<TheSpotlight :x="x" :y="y" />
+		<TheSpotlight />
 		<div class="w-56">
 			<h1 class="text-x font-bold">Hi Infinite Scroll 👋</h1>
 			<!-- <div
