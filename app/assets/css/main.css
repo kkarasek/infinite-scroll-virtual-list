@@ -4,7 +4,13 @@
 
 html,
 body {
-	background-color: black;
+	background-color: #08090a;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+::-webkit-scrollbar {
+	width: 8px;
+}
+::-webkit-scrollbar-track {
+	background: #08090a;
 }
