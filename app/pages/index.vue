@@ -31,7 +31,7 @@ fetchData();
 		class="h-screen w-screen bg-[#08090a] p-8 text-white relative overflow-hidden"
 	>
 		<div
-			class="absolute w-screen h-screen blur-3xl z-30 pointer-events-none"
+			class="inset-0 blur-3xl z-30 hidden lg:block absolute pointer-events-none"
 			:style="{
 				background: `radial-gradient(
           400px at ${x}px ${y}px,
