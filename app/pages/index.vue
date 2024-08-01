@@ -3,6 +3,7 @@
 - extract fetchData()
 - add proper error handling
 - fix loadMore function
+- extract types correctly
 - fix hydration issue
 - learn why onMount doesn't trigger fetch function correctly
 - useFetch vs $fetch - why, when (use axios if applicable)
