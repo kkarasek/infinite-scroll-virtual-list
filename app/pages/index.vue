@@ -85,6 +85,7 @@ onMounted(() => {
 			<h1 class="text-x font-bold">Hi Infinite Scroll 👋</h1>
 			<div v-bind="containerProps" class="mt-12 h-[480px] overflow-y-auto">
 				<div v-bind="wrapperProps">
+					<!-- can't be like that -->
 					<div ref="scrollListRef">
 						<div v-for="{ data } in list" :key="data.id">
 							{{ data.name }}
