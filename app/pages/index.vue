@@ -3,11 +3,10 @@
 - extract types correctly
 - fix hydration issue
 - useFetch vs $fetch - why, when (use axios if applicable)
-- add virtual scrolling
  -->
 
 <script setup lang="ts">
-import { useInfiniteScroll, useDebounceFn, useVirtualList } from '@vueuse/core';
+import { useInfiniteScroll, useVirtualList } from '@vueuse/core';
 interface Colour {
 	id: number;
 	name: string;
@@ -24,16 +23,22 @@ const colours = ref<Colour[]>([]);
 const isLoading = ref(false);
 const hasMore = ref(true);
 
-const scrollListRef = ref<HTMLElement | null>(null);
+const demoArray = ref(Array.from(Array(50).keys(), () => 'Lorem ipsum'));
+
+const firstItemRef = ref<HTMLElement | null>(null);
+
+const { list, containerProps, wrapperProps } = useVirtualList(colours, {
+	itemHeight: 20,
+});
 
 useInfiniteScroll(
-	scrollListRef,
+	containerProps.ref,
 	() => {
 		console.log('Load more triggered 🔥');
 		fetchData();
 	},
 	{
-		distance: 10,
+		distance: 20,
 	}
 );
 
@@ -47,6 +52,8 @@ const fetchData = async (isInitialLoad = false) => {
 		const data: ApiResponse = await $fetch('/api/colours', {
 			params: { limit, offset: offset.value },
 		});
+
+		console.log('data', data.data);
 
 		if (data.data.length < limit) {
 			hasMore.value = false;
@@ -75,11 +82,13 @@ onMounted(() => {
 		<TheSpotlight />
 		<div class="w-56">
 			<h1 class="text-x font-bold">Hi Infinite Scroll 👋</h1>
-			<div class="mt-12 h-[480px] overflow-y-auto" ref="scrollListRef">
-				<div v-for="colour in colours" :key="colour.id">
-					{{ colour.name }}
+			<div v-bind="containerProps" class="mt-12 h-[480px] overflow-y-auto">
+				<div v-bind="wrapperProps">
+					<div v-for="{ data } in list" :key="data.id">
+						{{ data.name }}
+					</div>
+					<div v-if="isLoading" class="pt-2">Loading...</div>
 				</div>
-				<div v-if="isLoading">Loading...</div>
 			</div>
 		</div>
 	</div>
