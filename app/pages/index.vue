@@ -1,6 +1,5 @@
 <!-- 
 *** TODO ***
-- fix useInfiniteScroll and useVirtualList so they can work together
 - extract types correctly
 - fix hydration issue
 - useFetch vs $fetch - why, when (use axios if applicable)
@@ -26,22 +25,22 @@ const hasMore = ref(true);
 
 const demoArray = ref(Array.from(Array(50).keys(), () => 'Lorem ipsum'));
 
-const scrollListRef = ref<HTMLElement | null>(null);
+const firstItemRef = ref<HTMLElement | null>(null);
+
+const { list, containerProps, wrapperProps } = useVirtualList(colours, {
+	itemHeight: 20,
+});
 
 useInfiniteScroll(
-	scrollListRef,
+	containerProps.ref,
 	() => {
 		console.log('Load more triggered 🔥');
 		fetchData();
 	},
 	{
-		distance: 10,
+		distance: 20,
 	}
 );
-
-const { list, containerProps, wrapperProps } = useVirtualList(colours, {
-	itemHeight: 20,
-});
 
 const fetchData = async (isInitialLoad = false) => {
 	if (isLoading.value || !hasMore.value) {
@@ -85,15 +84,12 @@ onMounted(() => {
 			<h1 class="text-x font-bold">Hi Infinite Scroll 👋</h1>
 			<div v-bind="containerProps" class="mt-12 h-[480px] overflow-y-auto">
 				<div v-bind="wrapperProps">
-					<!-- can't be like that -->
-					<div ref="scrollListRef">
-						<div v-for="{ data } in list" :key="data.id">
-							{{ data.name }}
-						</div>
+					<div v-for="{ data } in list" :key="data.id">
+						{{ data.name }}
 					</div>
+					<div v-if="isLoading" class="pt-2">Loading...</div>
 				</div>
 			</div>
-			<div v-if="isLoading">Loading...</div>
 		</div>
 	</div>
 </template>
