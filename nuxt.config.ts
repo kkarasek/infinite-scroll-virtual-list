@@ -14,6 +14,9 @@ export default defineNuxtConfig({
 	app: {
 		head: {
 			title: 'Infinite Scroll',
+			htmlAttrs: {
+				lang: 'en'
+			}
 		},
 	},
 });
